@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Melimi Telugu • Telugunudi</title>
+    <style>
+      body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #0b1020; color: #e9eefc; }
+      .wrap { max-width: 900px; margin: 0 auto; padding: 28px 18px 48px; }
+      a { color: #7aa2ff; text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 16px; margin-top: 14px; }
+      .muted { color: rgba(233,238,252,0.75); }
+      textarea, input { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(0,0,0,0.25); color: #e9eefc; }
+      button { margin-top: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.18); background: rgba(122,162,255,0.20); color: #e9eefc; cursor: pointer; }
+      button:hover { background: rgba(122,162,255,0.28); }
+      .out { white-space: pre-wrap; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <p><a href="/">← Dashboard</a></p>
+      <h1>Melimi Telugu</h1>
+      <p class="muted">
+        MVP: this is just a placeholder UI. Next we’ll implement a real conversion API in Spring Boot and connect it here.
+      </p>
+
+      <div class="card">
+        <label for="in">Input text</label>
+        <textarea id="in" rows="4" placeholder="Type Telugu text here..."></textarea>
+        <button type="button" onclick="convert()">Convert (placeholder)</button>
+        <p class="muted" style="margin-top: 12px;">Output</p>
+        <div id="out" class="out muted">(nothing yet)</div>
+      </div>
+    </div>
+
+    <script>
+      function convert() {
+        const value = document.getElementById("in").value || "";
+        // Placeholder behavior. We'll replace this with a call to /api/melimi later.
+        document.getElementById("out").textContent = value.trim() ? ("[Melimi output will appear here]\\n\\nYou typed:\\n" + value) : "(nothing yet)";
+      }
+    </script>
+  </body>
+</html>
+

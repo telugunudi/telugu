@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="te">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>మెలిమి తెలుగు • Telugunudi</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, "Noto Sans Telugu", sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      /* background */
+      background-image: url("images/melimitelugubg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* glass panel */
+    .panel {
+      width: min(900px, 90%);
+      padding: 36px 32px 40px;
+      border-radius: 48px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25),
+        rgba(255, 255, 255, 0.18)
+      );
+      backdrop-filter: blur(14px);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+      text-align: center;
+    }
+
+    .title {
+      font-size: 34px;
+      letter-spacing: 0.08em;
+      margin: 0 0 6px;
+      color: #3a2a14;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #5a4630;
+      margin-bottom: 28px;
+    }
+
+    /* decorative kolam */
+    .kolam {
+      font-size: 22px;
+      margin-bottom: 24px;
+      color: #8b6b2e;
+    }
+
+    .box-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 26px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px 16px;
+      font-size: 16px;
+      border-radius: 18px;
+      border: 1.5px solid rgba(120, 90, 40, 0.45);
+      resize: none;
+      outline: none;
+      background: rgba(255,255,255,0.75);
+      color: #2b1d0f;
+    }
+
+    textarea::placeholder {
+      color: #6d5a42;
+    }
+
+    textarea[readonly] {
+      background: rgba(255,255,255,0.85);
+    }
+
+    button {
+      padding: 12px 28px;
+      font-size: 16px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(90deg, #c58b2b, #f2c56b);
+      color: #2a1c0f;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.45);
+    }
+
+    @media (max-width: 700px) {
+      .box-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="panel">
+    <h1 class="title">మెళిమి తెలుగు</h1>
+    <div class="subtitle">ఆంగ్ల పదానికి మెలిమి తెలుగులో తెల్లం</div>
+
+    <div class="kolam">✦ ❋ ✦</div>
+
+    <div class="box-row">
+      <textarea
+        id="englishInput"
+        placeholder="ఆంగ్ల పదం (example: sky, earth, water)"
+      ></textarea>
+
+      <textarea
+        id="teluguOutput"
+        placeholder="మెలిమి తెలుగులో తెల్లం ఇక్కడ వస్తుంది"
+        readonly
+      ></textarea>
+    </div>
+
+    <button onclick="convertWord()">చెప్పు</button>
+  </div>
+
+  <script>
+  let melimiMap = {};
+  fetch("melimitelugu.json")
+    .then(res => res.json())
+    .then(data => {
+      melimiMap = data;
+    })
+    .catch(err => {
+      console.error("Failed to load melimi words", err);
+    });
+
+  function convertWord() {
+    const input = document
+      .getElementById("englishInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+    const outputBox = document.getElementById("teluguOutput");
+
+    if (!input) {
+      outputBox.value = "";
+      return;
+    }
+
+    if (melimiMap[input]) {
+      outputBox.value = melimiMap[input];
+    } else {
+      outputBox.value = "ఈ పదానికి మెలిమి తెలుగు ఇంకా లేదు";
+    }
+  }
+</script>
+
+</body>
+</html>

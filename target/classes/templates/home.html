@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Telugunudi</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: rgba(255, 255, 255, 0.06);
+        --text: #e9eefc;
+        --muted: rgba(233, 238, 252, 0.7);
+        --border: rgba(255, 255, 255, 0.12);
+        --accent: #7aa2ff;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background: radial-gradient(1200px 800px at 20% 10%, #15234a 0%, transparent 60%),
+          radial-gradient(1200px 800px at 80% 30%, #2b1557 0%, transparent 55%),
+          var(--bg);
+        color: var(--text);
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 18px 48px;
+      }
+      header {
+        display: flex;
+        gap: 16px;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        margin-bottom: 24px;
+      }
+      h1 {
+        margin: 0;
+        font-size: 28px;
+        letter-spacing: 0.2px;
+      }
+      .tagline {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 14px;
+        margin-top: 22px;
+      }
+      .card {
+        grid-column: span 12;
+        text-decoration: none;
+        color: inherit;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 18px 16px;
+        transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+      }
+      .card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(122, 162, 255, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .card h2 {
+        margin: 0 0 6px;
+        font-size: 18px;
+      }
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.45;
+      }
+      @media (min-width: 680px) {
+        .card { grid-column: span 6; }
+      }
+      @media (min-width: 980px) {
+        .card { grid-column: span 4; }
+      }
+      footer {
+        margin-top: 26px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .pill strong { color: var(--text); }
+      .right { display: flex; align-items: center; gap: 10px; }
+      .small-link { color: var(--accent); text-decoration: none; font-size: 13px; }
+      .small-link:hover { text-decoration: underline; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div>
+          <h1>Telugunudi</h1>
+          <p class="tagline">A living archive of Telugu culture, history, literature, and language tools.</p>
+        </div>
+        <div class="right">
+          <span class="pill"><strong>Status</strong>: MVP dashboard</span>
+          <a class="small-link" href="/history">Enter</a>
+        </div>
+      </header>
+
+      <section>
+        <div class="grid">
+          <a class="card" href="/history">
+            <h2>History</h2>
+            <p>Kingdoms, dynasties, inscriptions, and rulers of Telugu land.</p>
+          </a>
+          <a class="card" href="/melimi">
+            <h2>Melimi Telugu</h2>
+            <p>Type text and get words in Melimi Telugu (tool page).</p>
+          </a>
+          <a class="card" href="/articles">
+            <h2>Articles</h2>
+            <p>Your original posts with photos and videos—like a media feed.</p>
+          </a>
+          <a class="card" href="/padyalu">
+            <h2>Padyaalu</h2>
+            <p>Poets → their padyalu → bhaavaalu (meanings/interpretations).</p>
+          </a>
+          <a class="card" href="/culture">
+            <h2>Culture</h2>
+            <p>Festivals, arts, places, traditions, and living culture.</p>
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        This is a basic starting dashboard. Next we’ll add real data models + admin pages.
+      </footer>
+    </div>
+  </body>
+</html>
+
