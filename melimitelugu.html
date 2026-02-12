@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>మెలిమి తెలుగు • Telugunudi</title>
+  <title>మేలిమి తెలుగు • Telugunudi</title>
 
   <style>
     * { box-sizing: border-box; }
@@ -117,8 +117,8 @@
 <body>
 
   <div class="panel">
-    <h1 class="title">మెలిమి తెలుగు</h1>
-    <div class="subtitle">ఆంగ్ల పదానికి మెలిమి తెలుగులో తెల్లం</div>
+    <h1 class="title">మేలిమి తెలుగు</h1>
+    <div class="subtitle">ఆంగ్ల పదానికి మేలిమి తెలుగులో తెల్లం</div>
 
     <div class="kolam">✦ ❋ ✦</div>
 
@@ -130,7 +130,7 @@
 
       <textarea
         id="teluguOutput"
-        placeholder="మెలిమి తెలుగులో తెల్లం ఇక్కడ వస్తుంది"
+        placeholder="మేలిమి తెలుగులో తెల్లం ఇక్కడ వస్తుంది"
         readonly
       ></textarea>
     </div>
@@ -139,36 +139,61 @@
   </div>
 
   <script>
-  let melimiMap = {};
-  fetch("melimitelugu.json")
-    .then(res => res.json())
-    .then(data => {
-      melimiMap = data;
-    })
-    .catch(err => {
-      console.error("Failed to load melimi words", err);
-    });
+let melimiEntries = [];
+let melimiMap = {};
 
-  function convertWord() {
-    const input = document
-      .getElementById("englishInput")
-      .value
-      .trim()
-      .toLowerCase();
+fetch("melimitelugu.json")
+  .then(res => res.json())
+  .then(data => {
+    melimiMap = data;
+    melimiEntries = Object.entries(data).map(([key, value]) => ({
+      keyLower: key.toLowerCase(),
+      keyOriginal: key,
+      value: value
+    }));
+  });
 
-    const outputBox = document.getElementById("teluguOutput");
+const inputBox = document.getElementById("englishInput");
+const outputBox = document.getElementById("teluguOutput");
 
-    if (!input) {
-      outputBox.value = "";
-      return;
-    }
-
-    if (melimiMap[input]) {
-      outputBox.value = melimiMap[input];
-    } else {
-      outputBox.value = "ఈ పదానికి మెలిమి తెలుగు ఇంకా లేదు";
-    }
+function isSubsequence(query, word) {
+  let i = 0, j = 0;
+  while (i < query.length && j < word.length) {
+    if (query[i] === word[j]) i++;
+    j++;
   }
+  return i === query.length;
+}
+
+inputBox.addEventListener("input", () => {
+  const query = inputBox.value.trim().toLowerCase();
+  outputBox.value = "";
+
+  if (query.length === 2) {
+    if (melimiMap[query]) {
+      outputBox.value = `${melimiMap[query]} (${query})`;
+    } else {
+      outputBox.value = "ఈ పదానికి మేలిమి తెలుగు ఇంకా లేదు";
+    }
+    return;
+  }
+
+  if (query.length < 3) return;
+
+  let results = [];
+  const LIMIT = 100;
+
+  for (let entry of melimiEntries) {
+    if (isSubsequence(query, entry.keyLower)) {
+      results.push(`${entry.value} (${entry.keyOriginal})`);
+    }
+    if (results.length >= LIMIT) break;
+  }
+
+  outputBox.value = results.length
+    ? results.join("\n")
+    : "ఈ పదానికి మేలిమి తెలుగు ఇంకా లేదు";
+});
 </script>
 
 </body>
