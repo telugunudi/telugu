@@ -4,83 +4,128 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>తెలుగువారు • Telugunudi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@300;400;500;600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
       :root {
-        --bg-deep: #070812;
-        --bg-soft: #120e1f;
-        --panel: rgba(17, 11, 24, 0.82);
-        --border-soft: rgba(255, 255, 255, 0.14);
-        --accent-red: #ff4b3a;
-        --accent-gold: #f8d47a;
-        --ink: #fdf8f0;
-        --muted: rgba(245, 236, 224, 0.78);
+        --bg-midnight: #0a0e17;
+        --bg-deep: #0f1419;
+        --surface-elevated: rgba(15, 20, 30, 0.90);
+        --surface-glass: rgba(245, 240, 235, 0.02);
+        --border-luxury: rgba(218, 165, 96, 0.3);
+        --border-subtle: rgba(255, 255, 255, 0.12);
+        --accent-gold: #daa560;
+        --accent-amber: #f4c95d;
+        --accent-sage: #8ba888;
+        --text-primary: #f8f4ef;
+        --text-secondary: rgba(248, 244, 239, 0.85);
+        --text-tertiary: rgba(248, 244, 239, 0.48);
+        --shadow-premium: 0 20px 60px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.3);
+        --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.2);
       }
-      * { box-sizing: border-box; }
-      body {
+
+      * {
+        box-sizing: border-box;
         margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans Telugu", "Segoe UI", Roboto, sans-serif;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Noto Sans Telugu', 'Spectral', Georgia, serif;
         min-height: 100vh;
-        color: var(--ink);
-        background-color: var(--bg-deep);
+        color: var(--text-primary);
+        background-color: var(--bg-midnight);
         background-image:
+          linear-gradient(to bottom, rgba(10, 14, 23, 0.3) 0%, rgba(10, 14, 23, 0.2) 50%, rgba(10, 14, 23, 0.4) 100%),
           url("images/background.png"),
-          radial-gradient(1200px 900px at 10% 0%, #f6b15a 0%, transparent 60%),
-          radial-gradient(1200px 900px at 100% 0%, #0f6b4b 0%, transparent 60%),
-          radial-gradient(1600px 1200px at 50% 100%, #120e1f 0%, #05040a 65%);
+          radial-gradient(ellipse 1400px 1000px at 20% -10%, rgba(218, 165, 96, 0.08) 0%, transparent 60%),
+          radial-gradient(ellipse 1200px 900px at 85% 10%, rgba(139, 168, 136, 0.06) 0%, transparent 60%);
         background-repeat: no-repeat;
         background-size:
-          cover,
           auto,
+          cover,
           auto,
           auto;
         background-position:
+          center,
           center center,
-          0 0,
-          100% 0,
-          50% 100%;
+          20% -10%,
+          85% 10%;
         background-attachment: fixed;
         overflow-x: hidden;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      /* Loading Screen */
+      /* === LOADING SCREEN === */
       .loading-screen {
         position: fixed;
         inset: 0;
-        background: linear-gradient(135deg, #0a0e1a 0%, #1a0f2e 100%);
+        background: linear-gradient(135deg, #0a0e17 0%, #1a1520 100%);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         z-index: 9999;
-        animation: fadeOut 0.8s ease-out 2.5s forwards;
+        animation: fadeOut 1s ease-out 2.8s forwards;
+      }
+
+      .loading-ornament {
+        width: 140px;
+        height: 140px;
+        position: relative;
+        margin-bottom: 40px;
       }
 
       .loading-logo {
-        width: 120px;
-        height: 120px;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         background-image: url("images/logo.png");
         background-size: contain;
         background-position: center;
-        border: 3px solid var(--accent-gold);
-        box-shadow: 0 0 40px rgba(248, 212, 122, 0.5);
-        animation: pulseGlow 2s ease-in-out infinite;
-        margin-bottom: 30px;
+        border: 2px solid var(--accent-gold);
+        box-shadow: 
+          0 0 0 8px rgba(218, 165, 96, 0.15),
+          0 0 60px rgba(218, 165, 96, 0.4),
+          inset 0 0 30px rgba(218, 165, 96, 0.1);
+        animation: pulseGlowPremium 3s ease-in-out infinite;
+        position: relative;
+        z-index: 2;
+      }
+
+      .loading-logo::before {
+        content: '';
+        position: absolute;
+        inset: -20px;
+        border: 1px solid rgba(218, 165, 96, 0.25);
+        border-radius: 50%;
+        animation: rotateBorder 20s linear infinite;
       }
 
       .loading-text {
-        font-size: 32px;
+        font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+        font-size: 48px;
         font-weight: 600;
-        color: var(--accent-gold);
-        letter-spacing: 0.15em;
-        animation: fadeInOut 2s ease-in-out infinite;
+        letter-spacing: 0.08em;
+        background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-amber) 50%, var(--accent-gold) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        background-size: 200% 200%;
+        animation: shimmerFlow 4s ease-in-out infinite;
+        margin-bottom: 16px;
       }
 
       .loading-subtext {
-        margin-top: 15px;
-        font-size: 14px;
-        color: var(--muted);
-        opacity: 0.7;
+        font-size: 15px;
+        font-weight: 300;
+        color: var(--text-secondary);
+        letter-spacing: 0.15em;
+        opacity: 0;
+        animation: fadeInSlow 1s ease-out 0.5s forwards;
       }
 
       @keyframes fadeOut {
@@ -90,417 +135,597 @@
         }
       }
 
-      @keyframes pulseGlow {
+      @keyframes pulseGlowPremium {
         0%, 100% {
           transform: scale(1);
-          box-shadow: 0 0 40px rgba(248, 212, 122, 0.5);
+          box-shadow: 
+            0 0 0 8px rgba(218, 165, 96, 0.15),
+            0 0 60px rgba(218, 165, 96, 0.4),
+            inset 0 0 30px rgba(218, 165, 96, 0.1);
         }
         50% {
-          transform: scale(1.05);
-          box-shadow: 0 0 60px rgba(248, 212, 122, 0.8);
+          transform: scale(1.02);
+          box-shadow: 
+            0 0 0 12px rgba(218, 165, 96, 0.2),
+            0 0 80px rgba(218, 165, 96, 0.6),
+            inset 0 0 40px rgba(218, 165, 96, 0.15);
         }
       }
 
-      @keyframes fadeInOut {
-        0%, 100% { opacity: 0.6; }
-        50% { opacity: 1; }
+      @keyframes rotateBorder {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
       }
 
-      /* Content fade-in */
-      .wrap {
-        max-width: 1080px;
-        margin: 0 auto;
-        padding: 32px 18px 48px;
-        position: relative;
-        z-index: 2;
-        opacity: 0;
-        animation: fadeInContent 1s ease-out 3s forwards;
+      @keyframes shimmerFlow {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
       }
 
-      @keyframes fadeInContent {
+      @keyframes fadeInSlow {
         to { opacity: 1; }
       }
 
-      .parrot {
+      /* === LOGO === */
+      .floating-logo {
         position: fixed;
-        right: 18px;
-        top: 18px;
-        width: 64px;
-        height: 64px;
+        right: 32px;
+        top: 32px;
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
         background-image: url("images/logo.png");
         background-size: contain;
         background-position: center;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.65);
-        border: 2px solid rgba(250, 250, 250, 0.9);
-        z-index: 3;
-        transition: transform 0.3s ease;
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(218, 165, 96, 0.3);
+        border: 2px solid rgba(248, 244, 239, 0.15);
+        z-index: 100;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         opacity: 0;
-        animation: fadeInLogo 0.5s ease-out 3.2s forwards;
+        animation: fadeInLogo 0.6s ease-out 3.2s forwards;
+        backdrop-filter: blur(10px);
+      }
+
+      .floating-logo::before {
+        content: '';
+        position: absolute;
+        inset: -6px;
+        border: 1px solid rgba(218, 165, 96, 0.2);
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .floating-logo:hover {
+        transform: scale(1.08) rotate(5deg);
+        box-shadow: 
+          0 12px 48px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(218, 165, 96, 0.5);
+      }
+
+      .floating-logo:hover::before {
+        opacity: 1;
       }
 
       @keyframes fadeInLogo {
         to { opacity: 1; }
       }
 
-      .parrot:hover {
-        transform: rotate(15deg) scale(1.1);
+      /* === MAIN CONTAINER === */
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 80px 40px 100px;
+        opacity: 0;
+        animation: fadeInContent 1.2s ease-out 3s forwards;
       }
 
-      .panel {
-        border-radius: 12px;
-        background: linear-gradient(
-          135deg,
-          rgba(47, 79, 13, 0.04),
-          rgba(37, 75, 104, 0.04)
-        );
-        backdrop-filter: blur(1px);
-        transition: all 0.4s ease;
-      }
-      
-      .panel:hover {
-        background: linear-gradient(
-          135deg,
-          rgba(47, 79, 13, 0.45),
-          rgba(37, 75, 104, 0.45)
-        );
-        backdrop-filter: blur(16px);
-        transform: translateY(-2px);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-      }
-      
-      .panel:hover .text-block,
-      .panel:hover .subtitle {
-        color: var(--ink);
+      @keyframes fadeInContent {
+        to { opacity: 1; }
       }
 
-      header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 18px;
-        margin-bottom: 22px;
+      /* === HERO SECTION === */
+      .hero {
+        margin-bottom: 80px;
+        position: relative;
       }
-      
-      h1 {
-        margin: 0;
-        font-size: clamp(32px, 5vw, 42px);
-        letter-spacing: 0.12em;
-        background: linear-gradient(135deg, var(--accent-gold), #ffd89b);
+
+      .hero-content {
+        max-width: 900px;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 18px;
+        margin-bottom: 32px;
+        border-radius: 100px;
+        border: 1px solid var(--border-luxury);
+        background: linear-gradient(135deg, rgba(218, 165, 96, 0.08) 0%, rgba(139, 168, 136, 0.06) 100%);
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: var(--accent-gold);
+        backdrop-filter: blur(20px);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+        animation: pulseDot 2.5s ease-in-out infinite;
+      }
+
+      @keyframes pulseDot {
+        0%, 100% {
+          box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.2);
+        }
+        50% {
+          box-shadow: 0 0 0 8px rgba(74, 222, 128, 0.1);
+        }
+      }
+
+      .hero-title {
+        font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+        font-size: clamp(56px, 8vw, 92px);
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+        margin-bottom: 28px;
+        background: linear-gradient(
+          135deg,
+          var(--accent-gold) 0%,
+          var(--accent-amber) 40%,
+          var(--accent-gold) 80%,
+          var(--accent-sage) 100%
+        );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         background-size: 200% 200%;
-        animation: shimmer 3s ease-in-out infinite;
+        animation: shimmerPremium 8s ease-in-out infinite;
       }
 
-      @keyframes shimmer {
+      @keyframes shimmerPremium {
         0%, 100% { background-position: 0% 50%; }
         50% { background-position: 100% 50%; }
       }
 
-      .subtitle {
-        margin-top: 8px;
-        font-size: 15px;
-        color: var(--muted);
-        max-width: 540px;
-        transition: color 0.3s ease;
+      .hero-description {
+        font-size: 19px;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        max-width: 720px;
+        margin-bottom: 36px;
+        font-weight: 300;
       }
-      
-      .subtitle .highlight {
+
+      .hero-description .highlight {
         color: var(--accent-gold);
-        font-weight: 600;
-      }
-      
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(245, 245, 245, 0.65);
-        background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.22), transparent 60%);
-        font-size: 12px;
-        color: var(--muted);
-      }
-      
-      .pill-dot {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: #37ff80;
-        box-shadow: 0 0 0 4px rgba(55, 255, 128, 0.22);
-        animation: pulse 2s ease-in-out infinite;
+        font-weight: 500;
       }
 
-      @keyframes pulse {
-        0%, 100% {
-          box-shadow: 0 0 0 4px rgba(55, 255, 128, 0.22);
-        }
-        50% {
-          box-shadow: 0 0 0 8px rgba(55, 255, 128, 0.1);
-        }
+      /* === NAVIGATION === */
+      .nav-container {
+        margin-bottom: 80px;
       }
 
-      .pill strong { color: var(--ink); }
-      
-      .nav-bar {
-        margin-top: 18px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, #81d113, #3c9911, #0a6fd3);
-        padding: 9px 14px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .nav-bar:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
-      }
-
-      .nav-items {
+      .nav-rail {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: 8px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        padding: 24px;
+        background: var(--surface-elevated);
+        border-radius: 24px;
+        border: 1px solid var(--border-subtle);
+        backdrop-filter: blur(60px) saturate(180%);
+        box-shadow: var(--shadow-premium);
+        position: relative;
+        overflow: hidden;
       }
-      
+
+      .nav-rail::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, 
+          transparent 0%, 
+          rgba(218, 165, 96, 0.4) 50%, 
+          transparent 100%);
+      }
+
       .nav-item {
+        padding: 16px 20px;
         text-align: center;
-        font-size: 13px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.09em;
-        color: #fffaf3;
-        white-space: nowrap;
-        cursor: pointer;
-        padding: 6px;
-        border-radius: 8px;
-        transition: all 0.3s ease;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
         text-decoration: none;
-        display: block;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        background: var(--surface-glass);
+        transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav-item::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(218, 165, 96, 0.12) 0%, rgba(139, 168, 136, 0.08) 100%);
+        opacity: 0;
+        transition: opacity 0.35s ease;
       }
 
       .nav-item:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: scale(1.05);
+        color: var(--text-primary);
+        border-color: var(--border-luxury);
+        transform: translateY(-3px);
+        box-shadow: 
+          0 8px 24px rgba(0, 0, 0, 0.2),
+          0 0 0 1px rgba(218, 165, 96, 0.3);
       }
 
-      main {
-        margin-top: 22px;
+      .nav-item:hover::before {
+        opacity: 1;
+      }
+
+      /* === MAIN LAYOUT === */
+      .main-grid {
         display: grid;
-        grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-        gap: 26px;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 40px;
+        margin-bottom: 80px;
       }
-      
-      .section-title {
-        margin: 0 0 8px;
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--accent-gold);
-      }
-      
-      .text-block {
-        font-size: 14px;
-        line-height: 1.7;
-        color: var(--muted);
-        transition: color 0.3s ease;
-      }
-      
-      .text-block p {
-        margin: 0 0 10px;
-      }
-      
-      .text-block p:last-child { margin-bottom: 0; }
-      
-      .sea-strip {
-        margin-top: 18px;
-        height: 40px;
-        border-radius: 18px;
-        background:
-          linear-gradient(to right, rgba(10, 109, 191, 0.2), rgba(42, 171, 210, 0.5)),
-          linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
-        border: 1px solid rgba(123, 201, 255, 0.4);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+
+      /* === CONTENT CARDS === */
+      .content-card {
+        background: var(--surface-elevated);
+        border-radius: 28px;
+        border: 1px solid var(--border-subtle);
+        padding: 48px;
+        backdrop-filter: blur(60px) saturate(180%);
+        box-shadow: var(--shadow-premium);
         position: relative;
         overflow: hidden;
-        transition: transform 0.3s ease;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      .sea-strip:hover {
-        transform: translateX(5px);
+      .content-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        background: linear-gradient(135deg, 
+          rgba(218, 165, 96, 0.03) 0%, 
+          rgba(139, 168, 136, 0.02) 100%);
+        opacity: 0;
+        transition: opacity 0.5s ease;
       }
 
-      .sea-strip::before {
-        content: "";
+      .content-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--border-luxury);
+        box-shadow: 
+          0 32px 80px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(218, 165, 96, 0.3);
+      }
+
+      .content-card:hover::before {
+        opacity: 1;
+      }
+
+      .card-title {
+        font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+        font-size: 28px;
+        font-weight: 600;
+        color: var(--accent-gold);
+        margin-bottom: 24px;
+        letter-spacing: 0.02em;
+      }
+
+      .card-content {
+        font-size: 16px;
+        line-height: 1.85;
+        color: var(--text-secondary);
+        position: relative;
+        z-index: 1;
+      }
+
+      .card-content p {
+        margin-bottom: 20px;
+      }
+
+      .card-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* === DECORATIVE OCEAN ELEMENT === */
+      .ocean-divider {
+        height: 60px;
+        margin-top: 48px;
+        border-radius: 30px;
+        background: 
+          linear-gradient(135deg, rgba(15, 109, 191, 0.15) 0%, rgba(42, 171, 210, 0.25) 100%),
+          linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+        border: 1px solid rgba(42, 171, 210, 0.3);
+        box-shadow: 
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          inset 0 2px 20px rgba(42, 171, 210, 0.1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ocean-divider::before {
+        content: '';
         position: absolute;
         inset: 0;
         background-image: repeating-linear-gradient(
           90deg,
-          rgba(255, 255, 255, 0.22) 0,
-          rgba(255, 255, 255, 0.22) 2px,
-          transparent 2px,
-          transparent 6px
+          rgba(255, 255, 255, 0.08) 0,
+          rgba(255, 255, 255, 0.08) 3px,
+          transparent 3px,
+          transparent 12px
         );
-        opacity: 0.35;
-        animation: waveMove 3s linear infinite;
+        animation: waveFlow 4s linear infinite;
       }
 
-      @keyframes waveMove {
+      @keyframes waveFlow {
         0% { transform: translateX(0); }
-        100% { transform: translateX(6px); }
+        100% { transform: translateX(12px); }
       }
 
-      .sea-strip::after {
+      .ocean-divider::after {
         content: "సముద్ర మట్టానికి దగ్గరగా పుట్టిన భాష, గోపురాల ఎత్తుకి పెరిగిన సంస్కృతి.";
         position: absolute;
-        left: 14px;
-        right: 14px;
+        left: 28px;
+        right: 28px;
         top: 50%;
         transform: translateY(-50%);
-        font-size: 12px;
-        color: #e9f7ff;
+        font-size: 13px;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.85);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      
-      .side-card {
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        padding: 14px 14px 16px;
-        background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.06), transparent 55%);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
-        transition: all 0.4s ease;
+
+      /* === ASIDE CARDS === */
+      .aside-card {
+        background: var(--surface-elevated);
+        border-radius: 28px;
+        border: 1px solid var(--border-subtle);
+        padding: 40px;
+        backdrop-filter: blur(30px) saturate(180%);
+        box-shadow: var(--shadow-premium);
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
       }
 
-      .side-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
-        border-color: rgba(248, 212, 122, 0.4);
+      .aside-card::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, 
+          rgba(218, 165, 96, 0.15) 0%, 
+          rgba(139, 168, 136, 0.1) 100%);
+        border-radius: 28px;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: -1;
       }
 
-      .side-card h2 {
-        margin: 0 0 8px;
-        font-size: 16px;
-        color: var(--accent-gold);
-      }
-      
-      .side-card p {
-        margin: 0 0 8px;
-        font-size: 13px;
-        color: var(--muted);
-      }
-      
-      .foot-grid {
-        margin-top: 26px;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-        font-size: 13px;
-        color: var(--muted);
+      .aside-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 
+          0 32px 80px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(218, 165, 96, 0.4);
       }
 
-      .foot-grid > div {
-        transition: transform 0.3s ease;
-        padding: 10px;
-        border-radius: 8px;
+      .aside-card:hover::before {
+        opacity: 1;
       }
 
-      .foot-grid > div:hover {
-        transform: translateY(-3px);
-        background: rgba(248, 212, 122, 0.05);
-      }
-
-      .foot-card-title {
-        margin: 0 0 4px;
+      .aside-title {
+        font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+        font-size: 24px;
         font-weight: 600;
         color: var(--accent-gold);
+        margin-bottom: 20px;
+        letter-spacing: 0.02em;
       }
-      
-      footer {
-        margin-top: 26px;
-        font-size: 12px;
-        color: var(--muted);
-        border-top: 1px solid rgba(255, 255, 255, 0.12);
-        padding-top: 14px;
+
+      .aside-content {
+        font-size: 15px;
+        line-height: 1.8;
+        color: var(--text-secondary);
+      }
+
+      .aside-content p {
+        margin-bottom: 16px;
+      }
+
+      .aside-content p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* === FOOTER GRID === */
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        margin-bottom: 80px;
+      }
+
+      .footer-card {
+        background: var(--surface-glass);
+        border: 1px solid var(--border-subtle);
+        border-radius: 20px;
+        padding: 36px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .footer-card:hover {
+        background: var(--surface-elevated);
+        border-color: var(--border-luxury);
+        transform: translateY(-4px);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+      }
+
+      .footer-card-title {
+        font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--accent-gold);
+        margin-bottom: 16px;
+      }
+
+      .footer-card-text {
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--text-secondary);
+      }
+
+      /* === FOOTER === */
+      .site-footer {
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 40px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
+        gap: 32px;
       }
-      
+
       .social-links {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-      }
-      
-      .social-pill {
-        padding: 4px 9px;
-        border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        background: rgba(15, 10, 22, 0.9);
-        transition: all 0.3s ease;
+        gap: 16px;
       }
 
-      .social-pill:hover {
-        transform: translateY(-2px);
+      .social-badge {
+        padding: 10px 20px;
+        border-radius: 100px;
+        border: 1px solid var(--border-luxury);
+        background: var(--surface-glass);
+        font-size: 13px;
+        color: var(--text-secondary);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(20px);
+      }
+
+      .social-badge:hover {
+        background: var(--surface-elevated);
         border-color: var(--accent-gold);
-        box-shadow: 0 4px 12px rgba(248, 212, 122, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
       }
 
-      .social-pill a {
+      .social-badge a {
         color: var(--accent-gold);
         text-decoration: none;
+        font-weight: 500;
         transition: color 0.3s ease;
-      }
-      
-      .social-pill a:hover {
-        color: #ffd89b;
-        text-decoration: underline;
-      }
-      
-      .social-email a {
-        color: var(--accent-gold);
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s ease;
-      }
-      
-      .social-email a:hover { 
-        color: #ffd89b;
-        text-decoration: underline; 
       }
 
-      @media (max-width: 900px) {
-        main {
-          grid-template-columns: minmax(0, 1fr);
+      .social-badge a:hover {
+        color: var(--accent-amber);
+      }
+
+      .contact-info {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .contact-info a {
+        color: var(--accent-gold);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        border-bottom: 1px solid transparent;
+      }
+
+      .contact-info a:hover {
+        color: var(--accent-amber);
+        border-bottom-color: var(--accent-amber);
+      }
+
+      /* === RESPONSIVE === */
+      @media (max-width: 1024px) {
+        .main-grid {
+          grid-template-columns: 1fr;
         }
-        .foot-grid {
-          grid-template-columns: minmax(0, 1fr);
+        
+        .footer-grid {
+          grid-template-columns: 1fr;
         }
       }
-      
-      @media (max-width: 640px) {
-        .nav-items {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          row-gap: 6px;
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 60px 24px 80px;
         }
-        .panel {
-          padding: 20px 18px 24px;
+
+        .floating-logo {
+          width: 56px;
+          height: 56px;
+          right: 20px;
+          top: 20px;
         }
-        .parrot {
-          width: 52px;
-          height: 52px;
+
+        .hero-title {
+          font-size: clamp(40px, 10vw, 56px);
         }
-        .loading-logo {
-          width: 90px;
-          height: 90px;
+
+        .hero-description {
+          font-size: 17px;
         }
+
+        .content-card,
+        .aside-card {
+          padding: 32px;
+        }
+
+        .nav-rail {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .loading-ornament {
+          width: 100px;
+          height: 100px;
+        }
+
         .loading-text {
-          font-size: 24px;
+          font-size: 36px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .nav-rail {
+          grid-template-columns: 1fr;
+        }
+
+        .site-footer {
+          flex-direction: column;
+          align-items: flex-start;
         }
       }
     </style>
@@ -508,58 +733,68 @@
   <body>
     <!-- Loading Screen -->
     <div class="loading-screen">
-      <div class="loading-logo"></div>
+      <div class="loading-ornament">
+        <div class="loading-logo"></div>
+      </div>
       <div class="loading-text">తెలుగువారు</div>
       <div class="loading-subtext">మన నుడి, మన తెలుగునాడు</div>
     </div>
 
-    <div class="parrot" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="panel">
-        <header>
-          <div>
-            <h1>తెలుగువారు</h1>
-            <p class="subtitle">
-              <span class="highlight"></span> సముద్రపు గాలి, కొబ్బరి చెట్లు, గోపురాలు, పాటల మధ్య పెరిగిన మన తెలుగు నుడి. తెలుగు వారి కోసం
-              "తెలుగువారు"
+    <!-- Floating Logo -->
+    <div class="floating-logo" aria-hidden="true"></div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <h1 class="hero-title">తెలుగువారు</h1>
+          
+          <p class="hero-description">
+            సముద్రపు గాలి, కొబ్బరి చెట్లు, గోపురాలు, పాటల మధ్య పెరిగిన మన తెలుగు నుడి. 
+            తెలుగు వారి కోసం <span class="highlight">"తెలుగువారు"</span> — మన భాష, మన సంస్కృతి, మన గుర్తింపు.
+          </p>
+        </div>
+      </section>
+
+      <!-- Navigation -->
+      <nav class="nav-container">
+        <div class="nav-rail">
+          <a class="nav-item" href="history.html">చరిత్ర</a>
+          <a class="nav-item" href="melimitelugu.html">మేలిమి తెలుగు</a>
+          <div class="nav-item">వ్యాసాలు</div>
+          <div class="nav-item">పద్యాలు</div>
+          <div class="nav-item">సంస్కృతి</div>
+        </div>
+      </nav>
+
+      <!-- Main Content Grid -->
+      <div class="main-grid">
+        <section class="content-card">
+          <h2 class="card-title">ఎందుకు "తెలుగువారు"?</h2>
+          <div class="card-content">
+            <p>
+              ఇంటి మేడపై కొబ్బరి చెట్లకు తాకే ఈదురుగాలిలో వినిపించే మాటలు, ఊరి దేవాలయ గోపురం చాయలో వినిపించే శంకుఘోష,
+              సముద్ర తీరంలో అలలతో కలిసిపోయే చిన్న పాట – ఇవన్నీ కలిసే చోటే "తెలుగువారు".
+            </p>
+            <p>
+              రోజువారీ మాట్లాడే తేలికపాటి పదాల నుంచి, పాత శాసనాల్లో, గ్రంథాల్లో దాగి ఉన్న గంభీరమైన తెలుగు వరకూ – ఈ
+              ప్రయాణం ఏదో పెద్ద గ్రంథాలయంలా కాదు; బసవన్నెద మీద కూర్చొని వినే కథల్లా, ఒక్కో సారి ఒక్కో తంతిని తడుస్తూ
+              ముందుకు వెళ్లే మెల్ల గొలుసులా ఉంటుంది.
+            </p>
+            <p>
+              ఇక్కడ మీరు మీ తెలుగును మళ్లీ మళ్లీ చూసుకోవచ్చు – మీ ఊరి పర్యాయాలు, మీ అమ్మమ్మ సామెతలు, మీరు ఇష్టపడే పాట
+              లైనులు, భవిష్యత్తులో మీరు రాయబోయే పద్యాలు, వ్యాసాలు. కాలంతో పాటు మారుతున్న తెలుగువారి రూపాన్ని,
+              పేరును, స్వరాన్ని కలిసి గమనించే స్థలం ఇది.
             </p>
           </div>
-        </header>
+          
+          <div class="ocean-divider" aria-hidden="true"></div>
+        </section>
 
-        <div class="nav-bar">
-          <div class="nav-items">
-            <a class="nav-item" href="history.html">చరిత్ర</a>
-            <a class="nav-item" href="melimitelugu.html">మేలిమి తెలుగు</a>
-            <div class="nav-item">వ్యాసాలు</div>
-            <div class="nav-item">పద్యాలు</div>
-            <div class="nav-item">సంస్కృతి</div>
-          </div>
-        </div>
-
-        <main>
-          <section>
-            <h2 class="section-title">ఎందుకు "తెలుగువారు"?</h2>
-            <div class="text-block">
-              <p>
-                ఇంటి మేడపై కొబ్బరి చెట్లకు తాకే ఈదురుగాలిలో వినిపించే మాటలు, ఊరి దేవాలయ గోపురం చాయలో వినిపించే శంకుఘోష,
-                సముద్ర తీరంలో అలలతో కలిసిపోయే చిన్న పాట – ఇవన్నీ కలిసే చోటే "తెలుగువారు".
-              </p>
-              <p>
-                రోజువారీ మాట్లాడే తేలికపాటి పదాల నుంచి, పాత శాసనాల్లో, గ్రంథాల్లో దాగి ఉన్న గంభీరమైన తెలుగు వరకూ – ఈ
-                ప్రయాణం ఏదో పెద్ద గ్రంథాలయంలా కాదు; బసవన్నెద మీద కూర్చొని వినే కథల్లా, ఒక్కో సారి ఒక్కో తంతిని తడుస్తూ
-                ముందుకు వెళ్లే మెల్ల గొలుసులా ఉంటుంది.
-              </p>
-              <p>
-                ఇక్కడ మీరు మీ తెలుగును మళ్లీ మళ్లీ చూసుకోవచ్చు – మీ ఊరి పర్యాయాలు, మీ అమ్మమ్మ సామెతలు, మీరు ఇష్టపడే పాట
-                లైనులు, భవిష్యత్తులో మీరు రాయబోయే పద్యాలు, వ్యాసాలు. కాలంతో పాటు మారుతున్న తెలుగువారి రూపాన్ని,
-                పేరును, స్వరాన్ని కలిసి గమనించే స్థలం ఇది.
-              </p>
-            </div>
-            <div class="sea-strip" aria-hidden="true"></div>
-          </section>
-
-          <aside class="side-card">
-            <h2>తెలుగు దృశ్యాలు (ప్రేరణ)</h2>
+        <aside class="aside-card">
+          <h2 class="aside-title">తెలుగు దృశ్యాలు</h2>
+          <div class="aside-content">
             <p>
               వెనుకపెట్టిన గోపురం ద్రావిడ దేవాలయ శిల్పాల్ని, కుడివైపు కొబ్బరి చెట్లు సముద్ర పక్కన పెరిగిన తీరాలను, ఎడమవైపు
               అలలు ఆడే సముద్ర రేఖను, పై భాగంలో ఆకుల్లా విస్తరించిన పచ్చని రంగులను గుర్తు చేస్తాయి.
@@ -568,47 +803,52 @@
               ఇలా చూపుల నేపథ్యంగా సముద్రం – ఆకుపచ్చ – గోపురం ఉన్నట్టు, మాటల నేపథ్యంగా కూడా చరిత్ర – పద్యాలు – సంస్కృति
               నెమ్మదిగా చేరతాయి. ఈ పేజీని మీరు ఎంతసేపు చూడాలనిపిస్తే అంతసేపు తెరిచి ఉంచుకునేలా ఉండాలని ఒక్క కోరిక.
             </p>
-          </aside>
-        </main>
-
-        <section class="foot-grid">
-          <div>
-            <p class="foot-card-title">తెలుగు నడిచే బాట</p>
-            <p>
-              పల్లెలో మట్టి బాటపై నడిచే పాదాల శబ్దం, నగరాల్లో మెట్రోలో వినిపించే ఆంగ్ల-తెలుగు కలిసిన మాట –
-              ఈ రెండూ కూడా ఇక్కడే చోటు దొరికేలా ప్రయాణం మొదలైంది.
-            </p>
           </div>
-          <div>
-            <p class="foot-card-title">స్మృతులు &amp; కథలు</p>
-            <p>
-              మీ ఊరి జాతరలో వేసే తొరణాలు, సంక్రాంతి గాలిపటాలు, దీపావళి వెలుగులు – ఈ అన్నీ కలిసిన జ్ఞాపకాల కోసం
-              కొద్దిగా స్థలం ఈ పేజీలో ఎప్పుడూ ఉంటుంది.
-            </p>
-          </div>
-          <div>
-            <p class="foot-card-title">ఇక్కడ మీ స్థానం</p>
-            <p>
-              ఇప్పటికి ఇది కేవలం ఆహ్వానం మాత్రమే. తరువాత మీరు జోడించే చరిత్ర, మెళిమి తెలుగు సాధనాలు, పద్యాలు, వ్యాసాలతో
-              "తెలుగువారు" నిజంగా తెలుగువారి చేతుల్తో నిండిపోతుంది.
-            </p>
-          </div>
-        </section>
-
-        <footer>
-          <div class="social-links">
-            <div class="social-pill">
-              Twitter: <a href="https://x.com/Teluguvaaru" target="_blank" rel="noreferrer">@Teluguvaaru</a>
-            </div>
-            <div class="social-pill">
-              Instagram: <a href="https://www.instagram.com/telunguvaaru/" target="_blank" rel="noreferrer">@telunguvaaru</a>
-            </div>
-          </div>
-          <div class="social-email">
-            సంప్రదించడానికి: <a href="mailto:tenugunudi@gmail.com">tenugunudi@gmail.com</a>
-          </div>
-        </footer>
+        </aside>
       </div>
+
+      <!-- Footer Grid -->
+      <section class="footer-grid">
+        <div class="footer-card">
+          <h3 class="footer-card-title">తెలుగు నడిచే బాట</h3>
+          <p class="footer-card-text">
+            పల్లెలో మట్టి బాటపై నడిచే పాదాల శబ్దం, నగరాల్లో మెట్రోలో వినిపించే ఆంగ్ల-తెలుగు కలిసిన మాట –
+            ఈ రెండూ కూడా ఇక్కడే చోటు దొరికేలా ప్రయాణం మొదలైంది.
+          </p>
+        </div>
+
+        <div class="footer-card">
+          <h3 class="footer-card-title">స్మృతులు &amp; కథలు</h3>
+          <p class="footer-card-text">
+            మీ ఊరి జాతరలో వేసే తొరణాలు, సంక్రాంతి గాలిపటాలు, దీపావళి వెలుగులు – ఈ అన్నీ కలిసిన జ్ఞాపకాల కోసం
+            కొద్దిగా స్థలం ఈ పేజీలో ఎప్పుడూ ఉంటుంది.
+          </p>
+        </div>
+
+        <div class="footer-card">
+          <h3 class="footer-card-title">ఇక్కడ మీ స్థానం</h3>
+          <p class="footer-card-text">
+            ఇప్పటికి ఇది కేవలం ఆహ్వానం మాత్రమే. తరువాత మీరు జోడించే చరిత్ర, మెళిమి తెలుగు సాధనాలు, పద్యాలు, వ్యాసాలతో
+            "తెలుగువారు" నిజంగా తెలుగువారి చేతుల్తో నిండిపోతుంది.
+          </p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="social-links">
+          <div class="social-badge">
+            Twitter: <a href="https://x.com/Teluguvaaru" target="_blank" rel="noreferrer">@Teluguvaaru</a>
+          </div>
+          <div class="social-badge">
+            Instagram: <a href="https://www.instagram.com/telunguvaaru/" target="_blank" rel="noreferrer">@telunguvaaru</a>
+          </div>
+        </div>
+        
+        <div class="contact-info">
+          సంప్రదించడానికి: <a href="mailto:tenugunudi@gmail.com">tenugunudi@gmail.com</a>
+        </div>
+      </footer>
     </div>
   </body>
 </html>

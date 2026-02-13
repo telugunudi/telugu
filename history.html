@@ -4,122 +4,398 @@
   <meta charset="utf-8" />
   <title>చరిత్ర • తెలుగు నేల</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Telugu:wght@300;400;500;600;700&family=Spectral:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      /* Pulled directly from the Kakatiya Thoranam image */
+      --stone-dark:      #3a3530;
+      --stone-mid:       #6b6055;
+      --stone-warm:      #8a7d6e;
+      --stone-light:     #b0a492;
+      --sky-blue:        #7ca8c4;
+      --forest-green:    #3d5c35;
+      --forest-mid:      #2a4228;
+      --moss:            #5a6e40;
+
+      /* UI surfaces */
+      --bg:              #1a1612;
+      --surface:         rgba(42, 36, 30, 0.82);
+      --surface-hover:   rgba(58, 50, 42, 0.92);
+      --border:          rgba(138, 125, 110, 0.25);
+      --border-hover:    rgba(176, 164, 146, 0.55);
+
+      /* Text */
+      --text-primary:    #c9a96e;
+      --text-secondary:  rgba(232, 224, 212, 0.7);
+      --text-gold:       #c9a96e;
+      --text-gold-hover: #e8c98a;
+
+      --shadow: 0 8px 40px rgba(0,0,0,0.55), 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
     body {
-      margin: 0;
-      font-family: "Noto Sans Telugu", system-ui, sans-serif;
-      background: #0f0f14;
-      color: #f3f3f3;
+      font-family: 'Noto Sans Telugu', 'Spectral', Georgia, serif;
+      min-height: 100vh;
+      background-color: var(--bg);
+      background-image:
+        linear-gradient(to bottom,
+          rgba(26, 22, 18, 0)    0%,
+          rgba(26, 22, 18, 0)   55%,
+          rgba(26, 22, 18, 0.15) 100%),
+        url("images/kakatiya.jpg"),
+        radial-gradient(ellipse 1200px 800px at 15% -5%,  rgba(93, 120, 80, 0.07)  0%, transparent 60%),
+        radial-gradient(ellipse 1000px 700px at 90%  5%,  rgba(124, 168, 196, 0.05) 0%, transparent 60%);
+      background-repeat: no-repeat;
+      background-size: auto, cover, auto, auto;
+      background-position: center, center center, 15% -5%, 90% 5%;
+      background-attachment: fixed;
+      color: var(--text-primary);
       line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      padding: 60px 20px 100px;
     }
 
+    /* ── Container ─────────────────────────────────────────────────────────── */
     .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding-top: 250px;
+      opacity: 0;
+      animation: fadeInContent 1s ease-out 0.2s forwards;
     }
 
-    h1 {
+    @keyframes fadeInContent { to { opacity: 1; } }
+
+    /* ── Page Title ────────────────────────────────────────────────────────── */
+    .page-header {
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 30px;
-      border-bottom: 2px solid #444;
-      padding-bottom: 10px;
+      margin-bottom: 28px;
     }
 
-    .timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .page-title {
+      font-family: 'Cormorant Garamond', 'Noto Sans Telugu', serif;
+      font-size: clamp(42px, 6.5vw, 68px);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--forest-green);
+      text-shadow:
+        0 2px 12px rgba(61, 92, 53, 0.4),
+        0 0  40px rgba(61, 92, 53, 0.15);
+      transition: opacity 0.4s ease;
+      margin-bottom: 0;
     }
 
+    .title-rule {
+      display: block;
+      width: 120px;
+      height: 1px;
+      margin: 14px auto 0;
+      background: linear-gradient(to right,
+        transparent, var(--stone-warm), var(--moss), var(--stone-warm), transparent);
+      opacity: 0.6;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ── Kingdom Cards ─────────────────────────────────────────────────────── */
     .kingdom {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 16px 20px;
-      border-radius: 12px;
-      transition: background 0.3s ease;
+      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 24px;
+      margin: 16px auto;
+      width: 50%;
+      text-align: center;
+      backdrop-filter: blur(48px) saturate(160%);
+      box-shadow: var(--shadow);
+      transition: background  0.35s ease,
+                  border-color 0.35s ease,
+                  box-shadow   0.35s ease,
+                  transform    0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  opacity      0.35s ease;
+      opacity: 0;
+      transform: translateX(-20px);
+      overflow: hidden;
+    }
+
+    /* carved-stone left accent bar */
+    .kingdom::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 40%;
+      border-radius: 0 2px 2px 0;
+      background: linear-gradient(to bottom, var(--moss), var(--stone-warm), var(--moss));
+      opacity: 0;
+      transition: opacity 0.35s ease, height 0.35s ease;
     }
 
     .kingdom:hover {
-      background: rgba(255,255,255,0.08);
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      transform: translateX(6px) !important;
+      box-shadow:
+        0 16px 56px rgba(0,0,0,0.65),
+        0 0 0 1px rgba(138, 125, 110, 0.4),
+        inset 0 1px 0 rgba(176, 164, 146, 0.1);
     }
 
-    .kingdom a {
-      color: #ffcc66;
+    .kingdom:hover::before {
+      opacity: 1;
+      height: 60%;
+    }
+
+    .kingdom-title {
+      color: var(--text-gold);
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      display: block;
+      transition: color 0.3s ease, letter-spacing 0.3s ease;
     }
 
-    .sub {
-      margin-top: 6px;
-      color: #ccc;
-      font-size: 0.95rem;
+    .kingdom-title:hover {
+      color: var(--text-gold-hover);
+      letter-spacing: 0.04em;
+    }
+
+    .kingdom-plain {
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .kingdom:hover .kingdom-plain {
+      color: var(--text-gold-hover);
+    }
+
+    .kingdom-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    /* ── Back button — inline after last card ─────────────────────────────── */
+    .back-inline {
+      display: flex;
+      justify-content: center;
+      margin: 28px auto 0;
+      width: 50%;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .back-inline.loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--stone-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      backdrop-filter: blur(48px) saturate(160%);
+      box-shadow: var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .back-link:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-hover);
+      color: var(--text-gold-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 44px rgba(0,0,0,0.55);
+    }
+
+    .back-arrow {
+      font-size: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover .back-arrow { transform: translateX(-4px); }
+
+    /* ── Ornament ──────────────────────────────────────────────────────────── */
+    .section-ornament {
+      text-align: center;
+      margin: 48px 0 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .section-ornament.loaded { opacity: 0.35; }
+
+    .ornament-line {
+      display: inline-block;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--stone-warm), transparent);
+      vertical-align: middle;
+      margin: 0 12px;
+    }
+
+    .ornament-dot {
+      display: inline-block;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--stone-warm);
+      vertical-align: middle;
+    }
+
+    /* ── Responsive ───────────────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      body { padding: 40px 16px 80px; }
+      .kingdom { width: 90%; padding: 16px 20px; }
+      .back-inline { width: 90%; }
+      .kingdom-title, .kingdom-plain { font-size: 18px; }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <h1>తెలుగు నేల చరిత్ర</h1>
+    <div class="content">
 
-    <div class="timeline">
+      <header class="page-header">
+        <h1 class="page-title" id="page-title">తెలుగు నేల చరిత్ర</h1>
+        <span class="title-rule" id="title-rule"></span>
+      </header>
 
       <div class="kingdom">
-        <a href="satavahanulu.html">1) శాతవాహనులు</a>
-        <div class="sub">తెలుగు ప్రాంతాల్లో తొలి మహా సామ్రాజ్యం</div>
+        <a href="satavahanulu.html" class="kingdom-title">1. శాతవాహనులు (క్రీ.పూ. 230 - క్రీ.శ. 220)</a>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">2. ఇక్ష్వాకులు (క్రీ.శ. 225 - 325)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">3. విష్ణుకుండినులు (క్రీ.శ. 420 - 624)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">4. చాళుక్యులు (క్రీ.శ. 543 - 753)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">5. రాష్ట్రకూటులు (క్రీ.శ. 753 - 982)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">6. పశ్చిమ చాళుక్యులు (క్రీ.శ. 973 - 1189)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">7. కాకతీయులు (క్రీ.శ. 1163 - 1323)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">8. విభజన యుగం (క్రీ.శ. 1347 - 1518)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">9. కుతుబ్ షాహీ మాన్యం (క్రీ.శ. 1518 - 1687)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">10. ముఘల్ మాన్యం (క్రీ.శ. 1687 - 1724)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">11. ద్వంద్వ పాలన యుగం (క్రీ.శ. 1724 - 1947)</span>
+      </div>
+      <div class="kingdom">
+        <span class="kingdom-plain">12. స్వతంత్ర భారత దేశం (క్రీ.శ. 1947 - ప్రస్తుతం)</span>
       </div>
 
-      <div class="kingdom">
-        2) ఇక్ష్వాకులు
+      <!-- Back button now lives after the last kingdom card -->
+      <div class="back-inline" id="back-btn">
+        <a href="index.html" class="back-link">
+          <span class="back-arrow">←</span>
+          <span>తెలుగువారు</span>
+        </a>
       </div>
 
-      <div class="kingdom">
-        3) విష్ణుకుండినులు
-      </div>
-
-      <div class="kingdom">
-        4) చాళుక్యులు
-      </div>
-
-      <div class="kingdom">
-        5) రాష్ట్రకూటులు
-      </div>
-
-      <div class="kingdom">
-        6) పశ్చిమ చాళుక్యులు
-      </div>
-
-      <div class="kingdom">
-        7) కాకతీయులు
-      </div>
-
-      <div class="kingdom">
-        8) తెలంగాణ — బహమనీ సుల్తాన్ మాన్యం<br>
-        ఆంధ్ర — విజయ నగర సామ్రాజ్యం
-      </div>
-
-      <div class="kingdom">
-        9) కుతుబ్ షాహీ మాన్యం (తెలంగాణ)<br>
-        ఆంధ్ర — విజయ నగర సామ్రాజ్యం
-      </div>
-
-      <div class="kingdom">
-        10) ముఘల్ మాన్యం
-      </div>
-
-      <div class="kingdom">
-        11) నిజాం మాన్యం (తెలంగాణ)<br>
-        బ్రిటిష్ మాన్యం (ఆంధ్ర)
-      </div>
-
-      <div class="kingdom">
-        12) భారత దేశం
+      <div class="section-ornament" id="ornament">
+        <span class="ornament-line"></span>
+        <span class="ornament-dot"></span>
+        <span class="ornament-line"></span>
       </div>
 
     </div>
   </div>
+
+  <script>
+    const title     = document.getElementById('page-title');
+    const titleRule = document.getElementById('title-rule');
+    const kingdoms  = Array.from(document.querySelectorAll('.kingdom'));
+    const backBtn   = document.getElementById('back-btn');
+    const ornament  = document.getElementById('ornament');
+
+    const loaded = new Set();
+
+    // ── 1. Staggered slide-in on page load ───────────────────────────────────
+    kingdoms.forEach((el, i) => {
+      setTimeout(() => {
+        el.style.opacity   = '1';
+        el.style.transform = 'translateX(0)';
+        loaded.add(el);
+        updateVisibility();
+      }, 100 + i * 100);
+    });
+
+    // Reveal back button + ornament after all cards have slid in
+    setTimeout(() => {
+      backBtn.classList.add('loaded');
+      ornament.classList.add('loaded');
+    }, 100 + 12 * 100 + 300);
+
+    // ── 2. Per-element scroll fade ────────────────────────────────────────────
+    const CARD_THRESHOLD = 400; // ← adjust to taste
+
+    function updateVisibility() {
+      // Title + decorative rule vanish immediately on any scroll
+      const scrolled = window.scrollY > 10;
+      title.style.opacity           = scrolled ? '0' : '1';
+      titleRule.style.opacity       = scrolled ? '0' : '0.6';
+      title.style.pointerEvents     = scrolled ? 'none' : '';
+      titleRule.style.pointerEvents = scrolled ? 'none' : '';
+
+      // Each kingdom card fades when its top crosses CARD_THRESHOLD
+      kingdoms.forEach(el => {
+        if (!loaded.has(el)) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < CARD_THRESHOLD) {
+          el.style.opacity       = '0';
+          el.style.pointerEvents = 'none';
+        } else {
+          el.style.opacity       = '1';
+          el.style.pointerEvents = '';
+        }
+      });
+
+      // Back button and ornament follow the last kingdom card
+      if (loaded.size === kingdoms.length) {
+        const lastRect = kingdoms[kingdoms.length - 1].getBoundingClientRect();
+        const show = lastRect.top >= CARD_THRESHOLD;
+        backBtn.style.opacity  = show ? '1'    : '0';
+        ornament.style.opacity = show ? '0.35' : '0';
+      }
+    }
+
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    updateVisibility();
+  </script>
 </body>
 </html>
